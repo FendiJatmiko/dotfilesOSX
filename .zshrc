@@ -66,11 +66,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 plugins=(
   zsh-autosuggestions
   git
-  dotenv
   osx
-  rake
-  ruby
-  go
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -120,7 +116,7 @@ setopt share_history
 
 # alias
 alias gco='git checkout'
-#alias l='ls'
+alias ls='ls -G'
 #alias la='ls -A'
 #alias ll='ls -lA'
 #alias merge='xrdb -merge ~/.Xresources'
@@ -133,8 +129,10 @@ export WORKSPACE="$HOME/workSpace"
 export GOROOT=/usr/local/go
 export GOBIN="/Users/2ndcommander/workSpace/golang/bin"
 export GOPATH="/Users/2ndcommander/workSpace/golang"
-export WORK="$GOPATH/src/git.sstv.io/apps/video/api/"
+#export WORK="$GOPATH/src/git.sstv.io/apps/video/api/"
+export WORK="/Users/2ndcommander/workSpace/golang/src/git.sstv.io/apps/payment/api"
 export MINE="$GOPATH/src/github.com/fendijatmiko/fendtoryProject"
+export CODE="$GOPATH/src/codemi"
 export GIT_TERMINAL_PROMPT=1
 export TEMP=/tmp/
 export PATH=$PATH:/usr/local/go/bin
@@ -152,9 +150,7 @@ POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
   dir 
   custom_javascript 
-  custom_go
   vcs
-  newline
   status
 )
 
@@ -169,4 +165,5 @@ if [[ $(print -P "%#") =~ "#" ]]; then
 fi
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%{%B%F{black}%K{yellow}%}$user_symbol%{%b%f%k%F{yellow}%} %{%f%}"
 
-
+export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"

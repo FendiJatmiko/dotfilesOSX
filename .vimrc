@@ -1,7 +1,4 @@
-" Sane vim defaults for ArchLabs
 
-" Arch defaults
-"runtime! archlinux.vim
 set encoding=utf8
 set nocompatible
 set smartindent
@@ -65,11 +62,12 @@ augroup END
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 
-
 filetype off
 "-------------- PLUGINS STARTS -----------------
 call plug#begin()
 
+Plug 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plug 'rakr/vim-one'
 Plug 'VundleVim/Vundle.vim'
 Plug 'fatih/vim-go'
 Plug 'Valloric/YouCompleteMe'
@@ -122,14 +120,18 @@ filetype on
 
 
 "----- GENERAL SETTINGS-------
+let mapleader=","
+let g:one_allow_italics = 1
 set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:airline_detect_paste=1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='murmur'
+let g:airline_theme='one'
 set background=dark
 let g:solarized_termcolors=256
-colorscheme solarized
+"colorscheme solarized8_dark 
+colorscheme one
+ 
 " Configure symbol
 if !exists('g:airline_symbols')
    let g:airline_symbols = {}
@@ -205,6 +207,15 @@ if has('persistent_undo')
     let &undodir = myUndoDir
     set undofile
 endif
+
+" PowerLine Setting 
+set guifont=Inconsolata\ for\ Powerline:h15
+let g:Powerline_symbols = 'fancy'
+set encoding=utf-8
+set t_Co=256
+set fillchars+=stl:\ ,stlnc:\
+set term=xterm-256color
+set termencoding=utf-8
 
 " Syntastic "
 set statusline+=%#warningmsg#
@@ -283,3 +294,28 @@ let g:tagbar_type_go = {
 	\ 'ctagsbin'  : 'gotags',
 	\ 'ctagsargs' : '-sort -silent'
 \ }
+
+"Credit joshdick
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+  if (has("nvim"))
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+
+"MacVim GUI
+if has("gui_running")
+   let s:uname = system("uname")
+   if s:uname == "Darwin\n"
+      set guifont=Inconsolata\ for\ Powerline:h15
+   endif
+endif

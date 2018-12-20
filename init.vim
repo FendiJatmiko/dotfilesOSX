@@ -5,6 +5,7 @@ set rtp+=~/.config/nvim/bundle/Vundle.vim
 " Vundle Begin
 call plug#begin('~/.config/nvim/plugged')
 
+Plug 'rakr/vim-one'
 Plug 'VundleVim/Vundle.vim'
 Plug 'fatih/vim-go'
 "Plug 'Valloric/YouCompleteMe'
@@ -61,6 +62,8 @@ call plug#end()
 filetype plugin indent on
 
 " set the runtime path to include Vundle and initialize
+set smartindent
+set encoding=utf-8
 set ruler
 set relativenumber
 set ttyfast
@@ -80,19 +83,17 @@ set nocursorcolumn
 set cursorline
 set lazyredraw
 set noet nowrap tw=0 ww=0
-set tabstop=2 softtabstop=2 expandtab shiftwidth=2 smarttab
+set tabstop=2 softtabstop=2 expandtab shiftwidth=2 
 set nobackup
 set pastetoggle=<F5>
 set scrolloff=5
 set termguicolors
-" True color support
-if (has("nvim"))
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
 
 "" ColorScheme
-colorscheme onedark
-
+colorscheme one
+set background=dark
+"General 
+let g:one_allow_italics = 1
 " Put plugins and dictionaries in this dir (also on Windows)
 let vimDir = '$HOME/.config/nvim'
 let &runtimepath.=','.vimDir
@@ -116,7 +117,7 @@ endif
 
 " Vim status line settings
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'simple'
+let g:airline_theme = 'one'
 "let g:material_theme_style = 'default' | 'palenight' | 'dark'
 " Populate proper symbol font
 let g:airline_powerline_fonts = 1
@@ -173,8 +174,8 @@ nnoremap td  :tabclose<CR>
 nnoremap nt  :NERDTreeToggle<CR>
 
 nnoremap <F4> :set hlsearch!<CR>
-
-nnoremap <Leader>yy :set clipboard=unnamedplus<CR>
+set clipboard=unnamed
+nnoremap <Leader>yy :set clipboard=unnamed<CR>
 nnoremap <Leader>yc :set clipboard=<CR>
 
 " GoLang settings.
@@ -217,3 +218,20 @@ inoremap <silent><expr> <Tab>
 
 " Close the documentation window when completion is done
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+"Credit joshdick
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+  if (has("nvim"))
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
